@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+  <head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Caccia QR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,550;0,9..144,700;1,9..144,560&family=Outfit:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+
+  </head>
+
+  <body class="page page--home">
+
+    <main class="shell">
+
+      <header class="masthead">
+
+        <div class="masthead-logo">
+          <img
+            src="IMG/logo-telemaco.jpg"
+            alt="La Nave di Telemaco, logo della scuola"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+
+        <p class="masthead-tag">
+          <span class="masthead-tag__icon" aria-hidden="true">⛵</span>
+          <span>20 giugno 2026</span>
+          <span class="masthead-tag__icon" aria-hidden="true">✦</span>
+        </p>
+
+        <ul class="sparkle-row" aria-hidden="true">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+
+        <h1 class="titolo-stack" id="titolo-principale">
+          <span class="titolo-stack__marca" id="titolo-marca">La Nave di Telemaco</span>
+          <span class="titolo-stack__evento" id="titolo-evento">Festa di fine anno</span>
+        </h1>
+
+        <div class="participant-chip">
+
+          <span class="participant-label">Partecipante</span>
+
+          <span id="participant">—</span>
+
+        </div>
+
+      </header>
+
+
+
+      <div id="progress-block" class="progress-block">
+
+        <div class="progress-head">
+
+          <span id="progress-label">Avanzamento</span>
+
+          <span id="progress-count" class="progress-count"></span>
+
+        </div>
+
+        <div
+
+          id="progress-bar"
+
+          class="progress-track"
+
+          role="progressbar"
+
+          aria-valuemin="0"
+
+          aria-valuenow="0"
+
+          aria-valuemax="1"
+
+          aria-label="Avanzamento nel percorso"
+
+        >
+
+          <div id="progress-fill" class="progress-fill"></div>
+
+        </div>
+
+      </div>
+
+
+
+      <section id="zone-intro" class="card intro-card"></section>
+
+      <section id="zone-clue" class="card clue-card">
+        <p class="card-heading">
+          <span class="card-heading__ico" aria-hidden="true">🧭</span>
+          Indizio attuale
+        </p>
+
+        <div id="zone-clue-body"></div>
+
+      </section>
+
+      <section id="zone-tesoro" class="card tesoro-card" hidden></section>
+
+      <section
+        id="reveal-block"
+        class="card reveal-card"
+        aria-label="Messaggio che si svela passo dopo passo"
+      >
+        <p class="reveal-heading">
+          <span aria-hidden="true">✧</span>
+          Messaggio della nave
+          <span aria-hidden="true">✧</span>
+        </p>
+        <p id="reveal-caption" class="reveal-caption"></p>
+        <div
+          id="reveal-grid"
+          class="reveal-grid"
+          role="group"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <p class="footer-actions">
+
+        <button type="button" id="btn-reset" class="btn btn-ghost btn-ghost--wide">
+          <span class="btn__ico" aria-hidden="true">↺</span>
+          Riavvia da capo su questo telefono
+        </button>
+
+      </p>
+
+    </main>
+
+    <script src="js/gameConfig.js"></script>
+
+    <script src="js/storage.js"></script>
+
+    <script src="js/indexPage.js"></script>
+
+  </body>
+
+</html>
+
