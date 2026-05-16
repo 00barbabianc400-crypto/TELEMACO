@@ -4,10 +4,14 @@
  *
  * Immagini: per le tappe fotografiche carica i file JPG nella cartella
  * `media/` con i nomi indicati nei testi (vedi clueHtml delle tappe 3–4, 7–8, 11–12).
+ *
+ * Sito pubblico (GitHub Pages): usato dalla pagina test-qrcodes per generare gli URL dentro i QR.
+ * Esempio: https://NOME_UTENTE.github.io/NOME_REPO  (senza slash finale).
  */
 window.GAME_CONFIG = {
   titoloMarca: "La Nave di Telemaco",
   titoloEvento: "Festa di fine anno",
+  siteUrl: "https://00barbabianc400-crypto.github.io/TELEMACO",
   revealPhrase: "TELEMACO2026",
   introHtml:
     "<p><strong>Marinai, il momento è arrivato!</strong></p>" +

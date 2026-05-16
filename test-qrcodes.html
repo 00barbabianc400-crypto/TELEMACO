@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Test QR — pubblicazione GitHub Pages</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .test-wrap {
+        max-width: 42rem;
+        margin: 0 auto;
+      }
+
+      .test-banner {
+        margin-bottom: 1.25rem;
+        padding: 0.95rem 1.1rem;
+        border-radius: var(--radius-card);
+        border: 1px dashed rgba(30, 45, 131, 0.35);
+        background: rgba(255, 253, 249, 0.75);
+      }
+
+      .test-banner .base-url-display {
+        display: inline-block;
+        margin-top: 0.35rem;
+        padding: 0.35rem 0.55rem;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        word-break: break-all;
+        background: rgba(30, 45, 131, 0.06);
+        border: 1px solid rgba(30, 45, 131, 0.12);
+      }
+
+      .test-banner--warn {
+        border-color: rgba(201, 84, 28, 0.45);
+        background: rgba(255, 240, 220, 0.55);
+      }
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.65rem;
+      }
+
+      .test-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+        gap: 1rem;
+      }
+
+      .test-card {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+        border-radius: 14px;
+        background: rgba(255, 253, 249, 0.92);
+        border: 1px solid rgba(30, 45, 131, 0.12);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .test-card h2 {
+        margin: 0 0 0.35rem;
+        font-size: 0.92rem;
+        color: var(--color-sea);
+      }
+
+      .test-card .label {
+        font-size: 0.74rem;
+        color: var(--color-ink-muted);
+        margin-bottom: 0.6rem;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .test-card .qr {
+        align-self: center;
+        padding: 0.5rem;
+        background: #fff;
+        border-radius: 10px;
+        margin-bottom: 0.65rem;
+        border: 1px solid rgba(28, 36, 51, 0.08);
+      }
+
+      .test-card .link {
+        font-size: 0.62rem;
+        word-break: break-all;
+        color: var(--color-ink-muted);
+        line-height: 1.35;
+      }
+    </style>
+  </head>
+  <body class="page">
+    <main class="shell test-wrap">
+      <header class="masthead masthead--sub">
+        <p class="masthead-tag">Pagina di test pubblicata</p>
+        <h1>QR per prova dopo il deploy</h1>
+      </header>
+
+      <section class="test-banner" id="test-banner">
+        <p id="banner-lead">
+          <strong>I codici puntano alla versione online</strong>,
+          usando l’indirizzo <code>siteUrl</code> in
+          <code>js/gameConfig.js</code> (GitHub Pages). Apri questa pagina dal
+          sito pubblicato dopo aver attivato Pages sul repository.
+        </p>
+        <p>
+          Base usata nei QR:<br />
+          <span class="base-url-display"><code id="base-url-display"></code></span>
+        </p>
+        <div class="test-actions">
+          <a
+            class="btn btn-primary"
+            id="btn-home-online"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            >Apri la home sul sito pubblicato</a
+          >
+          <a class="btn btn-ghost" href="index.html">Questa sessione (stesso sito)</a>
+          <button type="button" class="btn btn-ghost" id="btn-print">
+            Stampa foglio (browser)
+          </button>
+        </div>
+      </section>
+
+      <div id="test-grid" class="test-grid"></div>
+    </main>
+
+    <script src="js/gameConfig.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+      (function () {
+        var cfg = window.GAME_CONFIG;
+        if (!cfg || !cfg.steps) return;
+
+        function normalizeBase(u) {
+          return String(u || "")
+            .trim()
+            .replace(/\/+$/, "");
+        }
+
+        function resolvePublicationBase(c) {
+          var fromConfig = c && c.siteUrl;
+          if (fromConfig && String(fromConfig).trim().length > 0) {
+            return normalizeBase(fromConfig);
+          }
+          var baseDir = window.location.pathname.replace(/[^/]+$/, "");
+          return normalizeBase(window.location.origin + baseDir);
+        }
+
+        var publicationBase = resolvePublicationBase(cfg);
+        var usedConfig = !!(cfg.siteUrl && String(cfg.siteUrl).trim().length > 0);
+
+        document.getElementById("base-url-display").textContent = publicationBase;
+
+        var banner = document.getElementById("test-banner");
+        var lead = document.getElementById("banner-lead");
+        if (!usedConfig) {
+          banner.classList.add("test-banner--warn");
+          lead.innerHTML =
+            "<strong>Attenzione:</strong> <code>siteUrl</code> non è definito in " +
+            "<code>gameConfig.js</code>. I QR usano l’indirizzo della pagina " +
+            "che stai aprendo ora (utile solo se coincide con la pubblicazione). " +
+            "Imposta <code>siteUrl</code> con l’URL GitHub Pages del repository.";
+        }
+
+        var homeOnline = document.getElementById("btn-home-online");
+        homeOnline.href = publicationBase + "/index.html";
+
+        function fullUrl(token) {
+          return (
+            publicationBase +
+            "/aggiorna.html?t=" +
+            encodeURIComponent(token)
+          );
+        }
+
+        function clipLabel(html, max) {
+          var d = document.createElement("div");
+          d.innerHTML = html;
+          var t = (d.textContent || "").replace(/\s+/g, " ").trim();
+          if (t.length > max) return t.slice(0, max) + "…";
+          return t;
+        }
+
+        var grid = document.getElementById("test-grid");
+        cfg.steps.forEach(function (step, i) {
+          var url = fullUrl(step.token);
+
+          var card = document.createElement("article");
+          card.className = "test-card";
+
+          var h = document.createElement("h2");
+          h.textContent = "Passaggio " + (i + 1) + " di " + cfg.steps.length;
+
+          var label = document.createElement("p");
+          label.className = "label";
+          label.textContent = clipLabel(step.clueHtml, 220);
+
+          var qrHost = document.createElement("div");
+          qrHost.className = "qr";
+
+          var link = document.createElement("div");
+          link.className = "link";
+          link.textContent = url;
+
+          card.appendChild(h);
+          card.appendChild(label);
+          card.appendChild(qrHost);
+          card.appendChild(link);
+          grid.appendChild(card);
+
+          if (typeof QRCode !== "undefined") {
+            new QRCode(qrHost, {
+              text: url,
+              width: 168,
+              height: 168,
+              colorDark: "#1e2d83",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.M,
+            });
+          } else {
+            qrHost.textContent = "(libreria QR non caricata)";
+          }
+        });
+
+        document
+          .getElementById("btn-print")
+          .addEventListener("click", function () {
+            window.print();
+          });
+      })();
+    </script>
+    <style media="print">
+      .test-banner .test-actions {
+        display: none;
+      }
+
+      .test-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+    </style>
+  </body>
+</html>
